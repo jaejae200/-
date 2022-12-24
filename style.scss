@@ -1,0 +1,215 @@
+$d: 70;      // density
+$w: 600;     // grid size
+$s: 3s;       // speed
+
+// Generate the snow image using radial gradients
+$grad: ();
+@for $i from 0 to $d {
+  $v: random(4) + 2;
+  $a: random(5) * .1 + .5;
+  $grad: $grad, radial-gradient(
+      $v+px $v+px at
+      (random($w - $v * 2) + $v)+px
+      (random($w - $v * 2) + $v)+px, 
+      rgba(255,255,255,$a) 50%,
+      rgba(0,0,0,0)
+  ) !global;
+}
+
+// The CSS
+html {
+  height: 100%;
+  background: linear-gradient(#123 30%, #667);
+  overflow: hidden;
+}
+
+.snow, .snow:before, .snow:after {
+  position: absolute;
+  top: -$w + px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: $grad;
+  background-size: $w + px $w + px;
+  animation: snow $s linear infinite;
+  content: "";
+}
+
+.snow:after {
+  margin-left: -$w/3 + px;
+  opacity: .4;
+  animation-duration: $s*2;
+  animation-direction: reverse;
+  filter: blur(3px);
+}
+
+.snow:before {
+  animation-duration: $s*3;
+  animation-direction: reverse;
+  margin-left: -$w/2 + px;
+  opacity: .65;
+  filter: blur(1.5px);
+}
+
+@keyframes snow {
+  to {
+    transform: translateY($w + px);
+  }
+}
+
+@function pixelize($colors, $size) {
+    $result: '';
+    $numRows: length($colors);
+  
+    @for $rowIndex from 1 through $numRows {
+      $y: ($rowIndex - 1);
+      $row: nth($colors, $rowIndex);
+      $numCols: length($row);
+  
+      @for $cellIndex from 1 through $numCols {
+        $x: ($cellIndex - 1);
+        $color: nth($row, $cellIndex);
+        
+        $sep: ',';
+        @if $x == 0 and $y == 0 {
+          $sep: '';
+        }
+        
+        $result: $result + '#{$sep} #{$x * $size} #{$y * $size} #{$color}'
+      }
+    }
+    
+    $result: unquote($result);
+    @return $result;
+}
+
+$size: 5px;
+
+$t: transparent;
+$a: #0b0c12;
+$b: #162623;
+$c: #27543a;
+$d: #2fa134;
+$f: #a6d485;
+$g: #919e57;
+$h: #fff419; 
+$j: #ffffff;
+
+
+$bell_1_1: #955710;
+$bell_1_2: #ff8000;
+
+$tree: (
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $j, $h, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $j, $h, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $j, $h, $h, $h, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $a, $a, $a, $a, $a, $a, $j, $h, $h, $h, $a, $a, $a, $a, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $g, $j, $j, $h, $j, $h, $h, $h, $h, $h, $h, $h, $h, $h, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $g, $h, $h, $h, $h, $h, $h, $h, $h, $h, $h, $h, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $g, $h, $h, $h, $h, $h, $h, $h, $h, $h, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $g, $h, $h, $h, $h, $h, $h, $h, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $g, $h, $h, $h, $h, $h, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $h, $h, $h, $h, $h, $h, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $h, $h, $h, $h, $h, $h, $h, $h, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $h, $h, $h, $h, $g, $g, $h, $h, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $h, $h, $h, $g, $g, $a, $a, $g, $g, $h, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $h, $g, $g, $a, $a, $f, $d, $a, $a, $g, $g, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $h, $g, $a, $a, $c, $f, $f, $d, $c, $b, $a, $a, $g, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $a, $a, $t, $t, $c, $f, $f, $d, $d, $b, $t, $t, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $d, $d, $d, $c, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $d, $c, $d, $c, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $d, $c, $d, $d, $c, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $d, $d, $d, $c, $d, $c, $c, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $d, $d, $d, $d, $c, $c, $c, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $d, $d, $c, $d, $d, $c, $c, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $d, $d, $d, $d, $c, $d, $c, $c, $c, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $f, $d, $d, $d, $d, $d, $c, $d, $c, $c, $c, $c, $a, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $t, $c, $f, $f, $f, $f, $d, $d, $d, $f, $d, $d, $d, $d, $d, $c, $c, $c, $g, $h, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $h, $g, $f, $f, $f, $f, $d, $d, $d, $d, $f, $d, $g, $d, $d, $c, $c, $c, $g, $h, $g, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $g, $h, $g, $f, $f, $d, $d, $d, $d, $d, $g, $g, $h, $g, $g, $g, $g, $g, $g, $h, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $g, $h, $g, $g, $d, $d, $d, $d, $g, $h, $h, $h, $h, $h, $h, $g, $h, $h, $g, $b, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $g, $h, $h, $h, $g, $g, $g, $g, $h, $h, $h, $g, $h, $g, $h, $h, $h, $g, $c, $c, $b, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $g, $h, $h, $h, $h, $g, $h, $h, $g, $g, $f, $g, $g, $g, $g, $g, $c, $c, $c, $c, $b, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $g, $h, $g, $h, $h, $h, $g, $d, $d, $f, $d, $d, $c, $d, $c, $c, $c, $c, $c, $d, $d, $d, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $d, $f, $g, $g, $g, $g, $g, $d, $d, $d, $d, $d, $d, $c, $d, $d, $d, $c, $c, $c, $c, $b, $b, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $d, $d, $f, $f, $d, $d, $d, $f, $f, $d, $d, $d, $d, $d, $c, $c, $c, $d, $d, $c, $c, $c, $c, $b, $b, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $d, $d, $f, $f, $f, $d, $d, $d, $f, $f, $d, $d, $d, $d, $c, $c, $c, $c, $d, $d, $c, $c, $c, $c, $c, $b, $b, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $d, $d, $b, $f, $f, $d, $d, $b, $f, $f, $f, $d, $d, $d, $d, $c, $c, $c, $b, $c, $d, $d, $d, $d, $d, $c, $c, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $d, $d, $b, $f, $f, $f, $d, $b, $c, $b, $f, $f, $d, $d, $d, $d, $c, $c, $b, $c, $b, $c, $d, $d, $d, $d, $c, $c, $c, $b, $b, $b, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $d, $b, $b, $c, $b, $f, $f, $b, $c, $c, $c, $b, $f, $f, $d, $d, $c, $c, $b, $c, $c, $c, $b, $c, $c, $b, $b, $b, $b, $c, $c, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $d, $b, $c, $c, $d, $b, $f, $b, $c, $c, $d, $d, $c, $b, $f, $d, $c, $c, $b, $c, $c, $c, $c, $c, $b, $c, $b ,$b, $b, $b, $b, $c, $c, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $b, $b, $c, $d, $d, $d, $d, $b, $d, $g, $g, $g, $g, $c, $b, $f, $c, $c, $c, $b, $c, $c, $c, $c, $c, $c, $b, $c, $g, $g, $g, $g, $g, $g, $g, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $b, $b, $c, $d, $d, $d, $d, $d, $d, $g, $g, $h, $h, $g, $h, $g, $d, $b, $c, $b, $b, $c, $c, $c, $c, $c, $c, $c, $c, $g, $h, $h, $h, $h, $h, $g, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $h, $g, $g, $g, $g, $d, $d, $d, $g, $g, $h, $h, $h, $h, $h, $h, $h, $g, $g, $g, $g, $c, $c, $d, $d, $d, $d, $c, $g, $g, $h, $h, $g, $h, $g, $h, $h, $g, $g, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $g, $h, $g, $h, $g, $g, $g, $g, $h, $g, $h, $h, $g, $g, $g, $g, $h, $h, $h, $h, $h, $g, $c, $d, $c, $d, $d, $g, $h, $h, $h, $g, $g, $g, $g, $g, $g, $g, $h, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $h ,$h, $h, $h, $h, $h, $h, $h, $h, $g, $g, $d, $d, $d, $d, $g, $h, $h, $g, $h, $h, $g, $g, $g, $g, $g, $h, $h, $g, $g, $c, $c, $c, $b, $b, $b, $b, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $g, $g, $g, $g, $h, $g, $h, $g, $g, $f, $d, $d, $d, $d, $d, $d, $g, $g, $g, $g, $h, $h, $h, $h, $g, $h, $h, $g, $c, $c, $c, $c, $c, $c, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $b, $f, $f, $d, $d, $d, $g, $g, $g, $b, $f, $d, $d, $d, $d, $d, $d, $d, $d, $f, $d, $d, $g, $h, $g, $h, $h, $h, $g, $c, $c, $c, $c, $c, $b, $b, $c, $b, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $f, $d, $b, $b, $c, $c, $c, $b, $f, $d, $d, $d, $d, $d, $d, $d, $f, $d, $d, $d, $d, $g, $g, $g, $g, $g, $d, $d, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $b, $c, $c, $d, $d, $d, $b, $f, $d, $b, $b, $d, $d, $d, $d, $d, $d, $d, $d, $d, $d, $d, $d, $c, $d, $b, $d, $d, $c, $b, $b, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $d, $d, $d, $d, $d, $d, $d, $b, $f, $b, $c, $b, $d, $d, $d, $d, $d, $d, $d, $d, $d, $d, $c, $c, $b, $b, $b, $d, $b, $b, $b, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $d, $d, $d, $d, $f, $d, $d, $b, $b, $c, $c, $c, $b, $f, $d, $d, $d, $d, $b, $d, $d, $d, $c, $b, $b, $b, $b, $b, $b, $c, $b, $c, $b, $b, $b, $b, $b, $a, $t, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $d, $d, $d, $d, $f, $d, $d, $d, $b, $d, $c, $c, $d, $b, $f, $d, $d, $b, $b, $c, $b, $d, $c, $c, $b, $b, $b, $c, $c, $b, $c, $b, $c, $b, $b, $b, $b, $g, $g, $g, $h, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $t, $t, $c, $f, $d, $d, $d, $d, $d, $d, $d, $d, $d, $c, $g, $g, $d, $d, $b, $d, $b, $c, $c, $c, $c, $b, $d, $b, $b, $b, $c, $c, $c, $c, $c, $c, $c, $b, $b, $b, $g, $h, $h, $g, $g, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $h, $g, $c, $f, $d, $d, $d, $d, $d, $d, $d, $d, $d, $g, $g, $h, $h, $g, $g, $g, $b, $c, $c, $c, $c, $c, $c, $b, $c, $b, $c, $c, $c, $c, $c, $c, $c, $c, $c, $b, $g, $h, $h, $g, $h, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $h, $h, $g, $f, $d, $d, $f, $d, $d, $g, $g, $g, $g, $h, $h, $h, $h, $h, $h, $h, $g, $g, $c, $c, $d, $d, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $g, $h, $h, $g, $g, $g, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $h, $h, $g, $g, $g, $g, $g, $g, $h, $h, $h, $h, $h, $h, $g, $g, $h, $h, $h, $h, $h, $g, $d, $d, $d, $d, $c, $c, $c, $c, $c, $c, $d, $c, $c, $b, $b, $g, $h, $h, $g, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $g, $h, $g, $h, $h, $h, $g, $h, $h, $g, $h, $h, $g, $g, $c, $d, $g, $g, $g, $h, $h, $h, $g, $d, $d, $d, $c, $c, $c, $c, $c, $c, $d, $c, $c, $c, $g, $h, $h, $g, $b, $b, $b, $b, $b, $a, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $g, $h, $h, $g, $h, $h, $h, $g, $g, $g, $g, $c, $d, $d, $d, $d, $d, $d, $g, $g, $h, $h, $g, $g, $d, $c, $c, $d, $d, $d, $d, $c, $c, $g, $g, $h, $h, $g, $c, $b, $b, $b, $b, $b, $b, $a, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $g, $g, $g, $g, $g, $g, $d, $d, $d, $c, $c, $d, $d, $d, $d, $d, $d, $d, $c, $g, $h ,$h, $h, $g, $g, $c, $c, $c, $c, $c, $g, $g, $h, $h, $h, $g, $c, $c, $c, $b, $b, $b, $b, $b, $b, $a, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $f, $d, $d, $d, $f, $d, $d, $d, $d, $d, $c, $c, $d, $d, $d, $d, $d, $d, $d, $c, $d, $g, $h, $h, $h, $h, $g, $g, $c, $g, $g, $h, $h, $h, $h, $g, $c, $c, $d, $c, $c, $b, $b, $b, $b, $b, $a, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $f, $d, $d, $d, $c, $f, $d, $d, $d, $d, $c, $c, $b, $d, $d, $d, $d, $d, $d, $d, $c, $d, $d, $g, $g, $h, $h, $h, $h, $h, $h, $h, $g, $h, $g, $g, $c, $c, $c, $d, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $d, $d, $d, $d, $c, $f, $d, $d, $d, $d, $d, $c, $c, $c, $d, $d, $d, $d, $d, $d, $c, $d, $d, $d, $d, $c, $g, $g, $h, $g, $h, $g, $h, $g, $g, $c, $d, $d, $d, $d, $c, $c, $c, $c, $c, $b, $b, $a, $b, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $d, $d, $d, $d, $c, $c, $f, $d, $d, $d, $d, $c, $c, $b, $c, $d, $d, $d, $d, $d, $c, $c, $d, $d, $d, $d, $d, $d, $c, $g, $g, $g, $g, $g, $c, $c, $b, $d, $d, $d, $d, $c, $c, $c, $c, $c, $c, $b, $b, $a, $b, $b, $a, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $f, $f, $d, $f, $d, $d, $d, $c, $c, $c, $c, $c, $d, $d, $c, $c, $b, $c, $b, $d, $d, $d, $d, $c, $c, $d, $d, $d, $d, $d, $d, $d, $c, $c, $c, $d, $d, $d, $c, $b, $b, $b, $d, $d, $d, $c, $c, $c, $c, $c, $c, $c, $b, $a, $b, $b, $b, $a, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $f, $f, $d, $d, $d, $d, $c, $c, $c, $c, $b, $b, $c, $d, $d, $c, $b, $c, $c, $b, $d, $d, $d, $c, $c, $c, $d, $d, $d, $d, $d, $d, $d, $c, $c, $c, $d, $d, $c, $b, $b, $b, $b, $b, $d, $d, $c, $c, $b, $b, $c, $c, $c, $c, $b, $a, $a, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $b, $d, $d, $c, $c, $c, $c, $b, $b, $c, $c, $b, $d, $c, $b, $c, $c, $c, $c, $b, $d, $c, $c, $b, $c, $d, $d, $d, $d, $d, $d, $c, $c, $c, $b, $d, $d, $c, $b, $b, $b, $b, $b, $b, $d, $c, $b, $b, $b, $b, $b, $c, $c, $c, $b, $b, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $b, $b, $b, $b, $b, $c, $c, $c, $c, $b, $c, $b, $c, $c, $c, $d, $d, $b, $c, $c, $b, $c, $b, $d, $d, $d, $d, $d, $d, $c, $c, $b, $b, $b, $c, $c, $b, $b, $c, $b, $b, $b, $b, $c, $b, $b, $b, $b, $b, $b, $a, $b, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $c, $c, $c, $c, $d, $d, $d, $b, $d, $c, $c, $d, $c, $d, $b, $c, $b, $c, $c, $c, $b, $d, $d, $d, $d, $c, $c, $b, $b, $b, $b, $b, $c, $b, $b, $c, $c, $b, $b, $b, $b, $b, $a, $b, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $c, $c, $d, $d, $d, $d, $d, $d, $d, $d, $d, $d, $c, $d, $d, $d, $b, $c, $c, $c, $c, $b, $d ,$d, $d, $d, $c, $c, $b, $b, $b, $c, $c, $b, $b, $b, $c, $c, $c, $b, $b, $b, $b, $b, $a, $b, $b, $b, $b, $b, $a, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $g, $g, $g, $g, $d, $d, $d, $c, $d, $d, $d, $d, $d, $d, $d, $d, $d, $b, $c, $c, $c, $c, $c, $b, $d, $d, $d, $c, $c, $b, $b, $c, $c, $c, $b, $c, $b, $c, $c, $c, $b, $b, $b, $b, $b, $b, $a, $b, $b, $b, $a, $g, $h, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $g, $h, $g, $h, $h, $h, $g, $g, $c, $d, $d, $d, $d, $d, $d, $d, $d, $d, $d, $d, $c, $c, $d, $g, $c, $b, $d, $d, $c, $c, $b, $b, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $d, $d, $b, $b, $b, $b, $a, $b, $b, $b, $g, $g, $h, $g, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $h, $g, $h, $h, $h, $g, $h, $h, $h, $g, $d, $d, $d, $d, $d, $d, $d, $c, $d, $d, $c, $c, $g, $g, $h, $g, $d, $b, $c, $c, $b, $b, $c, $c, $d, $c, $c, $c, $c, $c, $c, $c, $d, $d, $d, $c, $b, $b, $b, $b, $b, $b, $g, $g, $h, $g, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $g, $g, $h, $g, $g, $g, $g, $g, $h, $g, $h, $g, $c, $d, $d, $d, $d, $c, $d, $d, $c, $g, $g, $h, $h, $h, $h, $g, $b, $c, $b, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $d, $d, $c, $c, $b, $b, $b, $b, $g, $h, $h, $g, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $g, $g, $d, $f, $d, $d, $c, $g, $g, $h, $h, $g, $d, $d, $d, $c, $d, $d, $g, $g, $h, $h, $h, $h, $g, $h, $h, $g, $b, $d, $c, $c, $c, $d, $c, $c, $c, $c, $c, $c, $c, $c, $c, $d, $d, $c, $b, $c, $b, $b, $g, $h, $h, $g, $b, $b, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $d, $d, $b, $d, $d, $d, $d, $g, $h, $g, $g, $g, $d, $g, $g, $g, $h, $h, $h, $h, $g, $g, $d, $g, $h, $h, $g, $d, $c, $d, $c, $d, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $d, $c, $c, $b, $b, $g, $h, $h, $g, $a, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $d, $d, $d, $d, $d, $d, $d, $d, $d, $g, $h, $h, $h, $g, $h, $g, $h, $h, $h, $g, $g, $d, $d, $d, $d, $g, $h, $g, $g, $d, $d, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $c, $g, $h, $h, $g, $b, $a, $b, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $d, $d, $d, $c, $b, $d, $d, $d, $d, $c, $d, $g, $h, $h, $h, $h, $h, $h, $g, $g, $d, $d, $d, $d, $d, $d, $d, $g, $h, $h, $g, $d, $d, $c, $c, $c, $g, $g, $c, $c, $c, $b, $c, $c, $c, $c, $g, $g, $h, $h, $g, $a, $b, $b, $b, $b, $b, $a, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $d, $d, $c, $c, $b, $b, $d, $d, $d, $d, $c, $d, $d, $g, $g, $h, $g, $g, $g, $d, $d, $d, $c, $d, $d, $d, $d, $d, $d, $g, $h, $h, $g, $c, $c, $g, $g, $h, $h, $g, $g, $g, $c, $c, $b, $c, $g, $h, $g, $h, $g, $b, $b, $a, $b, $b, $b, $a, $a, $a, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $b, $b, $c, $c, $b, $b, $b, $b, $d, $d, $d, $c, $c, $d, $d, $d, $c, $g, $d, $d, $d, $d, $d, $c, $d, $d, $d, $d, $d, $d, $d, $d, $g, $g, $h, $g, $g, $h, $h, $h, $h, $h, $h, $g, $h, $g, $g, $g, $h, $h, $h, $g, $g, $b, $c, $b, $a, $b, $b, $b, $a, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $b, $b, $b, $c, $b, $d, $d, $c, $c, $b, $d, $d, $d, $c, $b, $d, $d, $d, $d, $d, $d, $c, $c, $c, $d, $d, $d, $d, $d, $d, $g, $h, $h, $h, $h, $h, $g, $g, $h, $h, $h, $h, $h, $g, $h, $h, $g, $g, $b, $b, $b, $b, $b, $a, $a, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $b, $c, $d, $c, $b, $d, $c, $c, $b, $b, $b, $d, $c, $c, $b, $b, $d, $d, $d, $d, $d, $c, $c, $b, $d, $d, $d, $d, $d, $c, $d, $g, $h, $h, $g, $g, $d, $c, $g, $g, $h, $g, $h, $h, $h, $g, $a, $a, $b, $b, $b, $c, $b, $b, $a, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $d, $c, $d, $c, $c, $b, $c, $b, $b, $b, $c, $b, $b, $c, $b, $b, $b, $b, $d, $d, $d, $c, $c, $b, $b, $b, $d, $d, $d, $c, $d, $d, $c, $g, $g, $a, $b, $d, $c, $c, $c, $g, $g, $g, $g, $g, $a, $b, $b, $b, $a, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $b, $b, $c, $d, $c, $c, $b, $c, $b, $b, $b, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $d, $d, $c, $b, $b, $b, $b, $b, $d, $d, $d, $d, $c, $c, $a, $b, $b, $b, $b, $c, $c, $a, $b, $b, $b, $b, $a, $b, $b, $b, $b, $b, $a, $a, $b, $b, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $t, $c, $b, $c, $d, $d, $c, $b, $b, $b, $b, $c, $c, $d, $c, $c, $c, $c, $c, $b, $b, $b, $b, $d, $c, $b, $b, $b, $b, $c, $c, $c, $c, $c, $c, $a, $b, $b, $b, $b, $b, $c, $c, $a, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $b, $b, $a, $a, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $c, $c, $c, $c, $c, $c, $b, $b, $c, $c, $c, $d, $c, $d, $c, $c, $c, $c, $b, $c, $c, $b, $b, $c, $b, $c, $b, $b, $c, $c, $c, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $a, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $b, $a, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $d, $d, $d, $d, $c, $c, $d, $c, $d, $c, $d, $c, $c, $c, $c, $c, $c, $b, $c, $b, $b, $b, $c, $c, $b, $c, $b, $c, $c, $b, $b, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $a, $b, $a, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t), 
+    ($t, $t, $t, $t, $t, $t, $t, $c, $f, $f, $d, $c, $d, $c, $c, $d, $d, $d, $d, $c, $d, $c, $c, $c, $c, $c, $b, $c, $c, $b, $c, $b, $c, $c, $c, $c, $c, $c, $c, $c, $b, $c, $b, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $a, $a, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $c, $d, $d, $c, $c, $d, $c, $c, $d, $d, $d, $c, $c, $c, $c, $c, $c, $c, $c, $c, $b, $c, $b, $c, $c, $c, $c, $c, $c, $c, $c, $b, $c, $c, $c, $c, $c, $b, $c, $c, $c, $b, $b, $a, $a, $b, $b, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $b, $a, $b, $b, $b, $b, $b, $b, $a, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $b, $d, $c, $c, $c, $d, $c, $c, $d, $d, $d, $c, $c, $d, $c, $b, $c, $c, $c, $b, $b, $b, $b, $b, $c, $c, $c, $c, $c, $c, $b, $b, $c, $c, $b, $c, $c, $c, $c, $c, $c, $c, $b, $b, $b, $a, $b, $b, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $a, $a, $a, $b, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $a, $a, $a, $a, $a, $a, $a, $c, $d, $d, $d, $c, $c, $c, $c, $c, $b, $c, $b, $b, $b, $b, $b, $b, $b, $b, $c, $c, $c, $c, $b, $b, $b, $c, $b, $c, $c, $c, $b, $b, $b, $c, $c, $b, $b, $b, $a, $a, $b, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $b, $a, $a, $a, $a, $a, $a, $a, $a, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $c, $d, $d, $c, $c, $c, $c, $c, $c, $b, $b, $b, $b, $b, $b, $a, $b, $b, $c, $c, $c, $c, $b, $b, $b, $b, $c, $c, $c, $b, $b, $b, $b, $b, $c, $c, $b, $b, $b, $b, $b, $a, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $b, $b, $b, $b, $b, $b, $b, $c, $b, $b, $b, $b, $b, $b, $b, $b, $a, $a, $t, $b, $c, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $c, $c, $b, $b, $b, $t, $b, $b, $c, $c, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $a, $a, $a, $a, $a, $b, $b, $b, $b, $b, $b, $b, $a, $a, $a, $t, $t, $t, $b, $c, $c, $b, $b, $a, $a, $t, $a, $a, $a, $b, $b, $a, $a, $a, $t, $a, $a, $c, $c, $c, $b, $b, $t, $t, $t, $a, $a, $a, $b, $b, $b, $b, $b, $b, $b, $a, $a, $a, $a, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $a, $a, $a, $a, $a, $a, $t, $t, $t, $t, $t, $b, $b, $b, $b, $a, $a, $t, $t, $t, $t, $t, $t, $a, $a, $t, $t, $t, $t, $t, $t, $a, $a, $c, $c, $b, $b, $t, $t, $t, $t, $t, $a, $a, $a, $a, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t),
+    ($t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $a, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $a, $a, $a, $a, $a, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t, $t)
+);
+  
+#tree {
+    position: relative;
+    width: calc(23 * #{$size});
+    height: calc(18 * #{$size});
+    margin: 1rem;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: $size;
+        height: $size;
+        box-shadow:
+        pixelize($tree, $size);
+    }
+}
